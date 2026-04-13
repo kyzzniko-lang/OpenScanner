@@ -1,0 +1,23 @@
+# ==============================
+# OpenScanner 全局配置
+# ==============================
+
+scanner:
+  max_concurrency: 50          # 最大并发协程数
+  request_timeout: 15          # 单次请求超时 (秒)
+  connect_timeout: 10          # 连接超时 (秒)
+  max_retries: 3               # 自动重试次数
+  retry_delay: 1.0             # 重试间隔 (秒)
+  follow_redirects: true       # 跟随重定向
+  verify_ssl: false            # SSL 证书验证 (扫描场景通常关闭)
+  http2: true                  # 启用 HTTP/2
+
+stealth:
+  random_user_agent: true      # 随机 User-Agent
+  random_delay: [0.1, 0.5]    # 请求间随机延迟范围 (秒)
+  header_order_shuffle: true   # 请求头顺序随机化
+
+logging:
+  level: INFO                  # 日志级别: DEBUG / INFO / WARNING / ERROR
+  file: logs/scanner.log       # 日志文件路径
+  console: true                # 控制台输出

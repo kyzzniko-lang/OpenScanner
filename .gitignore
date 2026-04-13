@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS / Environments
+.venv/
+env/
+venv/
+.env
+.python-version
+.DS_Store
+
+# AI Engine Artifacts (Local data & Keys)
+.ai_settings.json
+.ai_cache.json
+.rlhf_db.json
+models/*.gguf
+models/*.bin
+
+# Reports & Logs
+reports/
+*.log
+openscanner_urls.txt
+
+# Development / Temporary
+scratch/
+.test_write
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
