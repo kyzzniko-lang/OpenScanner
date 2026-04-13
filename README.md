@@ -410,5 +410,4 @@ MIT License — For authorized security assessments only / 仅供授权安全评
   <b>🔍 OpenScanner v1.0</b> — DAST × SAST × IAST × Mutation × AI Reasoning<br/>
   <i>Built with ⚡ asyncio + 🧬 mutation intelligence + 🤖 hybrid AI reasoning</i>
 </p>
-#   O p e n S c a n n e r  
- 
+# OpenScanner
