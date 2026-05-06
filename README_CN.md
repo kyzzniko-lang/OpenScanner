@@ -21,7 +21,7 @@
 ---
 
 <p align="center">
-  <img src="docs/demo_terminal.png" alt="OpenScanner 终端演示" width="720" />
+  
 </p>
 
 > **30 秒体验**：`docker run --rm -p 8501:8501 openscanner/openscanner` 或 `python main.py --demo`
