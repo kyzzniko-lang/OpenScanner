@@ -21,7 +21,7 @@
 ---
 
 <p align="center">
-  <img src="docs/demo_terminal.png" alt="OpenScanner Terminal Demo" width="720" />
+  
 </p>
 
 > **30-second demo**: `docker run --rm -p 8501:8501 openscanner/openscanner` or `python main.py --demo`
