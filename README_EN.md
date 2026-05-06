@@ -1,49 +1,19 @@
-<h1 align="center">OpenScanner</h1>
+# OpenScanner v1.5
 
-<p align="center">
-  <b>Hybrid Security Assessment Platform — DAST | SAST | IAST | AI Reasoning</b>
-</p>
+**Hybrid Security Assessment Platform -- DAST | SAST | IAST | AI Reasoning**
 
-<p align="center">
-  <a href="./README_CN.md">中文</a> | <a href="./README_EN.md">English</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.9+-3776ab?style=flat-square&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/github/actions/workflow/status/kyzzniko-lang/OpenScanner/CI?branch=main&style=flat-square&label=CI" alt="CI" />
-  <img src="https://img.shields.io/badge/tests-271%20passing-22c55e?style=flat-square" alt="Tests" />
-  <img src="https://img.shields.io/badge/coverage-21%20plugins-red?style=flat-square" alt="Coverage" />
-  <img src="https://img.shields.io/badge/AI-Hybrid%20LLM-blueviolet?style=flat-square&logo=openai" alt="AI" />
-  <img src="https://img.shields.io/github/license/kyzzniko-lang/OpenScanner?style=flat-square" alt="License" />
-  <img src="https://img.shields.io/badge/Status-v1.5.0-22c55e?style=flat-square" alt="Status" />
-</p>
+> Language: [English](./README_EN.md) | [中文](./README_CN.md)
 
 ---
 
-<p align="center">
-  <img src="docs/demo_terminal.png" alt="OpenScanner Terminal Demo" width="720" />
-</p>
-
-> **30-second demo**: `docker run --rm -p 8501:8501 openscanner/openscanner` or `python main.py --demo`
+[![Python](https://img.shields.io/badge/Python-3.9+-3776ab?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Security](https://img.shields.io/badge/Security-DAST%20%2B%20SAST%20%2B%20IAST%20%2B%20AI-red?style=flat-square&logo=shield)](.)
+[![httpx](https://img.shields.io/badge/Engine-httpx%20%2B%20asyncio-00b4d8?style=flat-square)](https://www.python-httpx.org)
+[![Streamlit](https://img.shields.io/badge/UI-Streamlit-ff4b4b?style=flat-square&logo=streamlit)](https://streamlit.io)
+[![AI](https://img.shields.io/badge/AI-Hybrid%20LLM-blueviolet?style=flat-square&logo=openai)](.)
+[![Status](https://img.shields.io/badge/Status-v1.5.0-22c55e?style=flat-square)](.)
 
 ---
-
-## Why OpenScanner?
-
-| | **OpenScanner** | **Nuclei** | **OWASP ZAP** | **SQLMap** |
-|---|---|---|---|---|
-| **DAST (Web)** | 16 vuln types, exhaustive payloads | Template-based, community templates | Proxy-based spider | SQLi only |
-| **SAST (Code)** | Built-in AST analysis + AI audit | No | Add-on (beta) | No |
-| **IAST (Runtime)** | Sink tracing + taint analysis | No | No | No |
-| **AI Reasoning** | Local LLM + Cloud API (OpenAI/Gemini/DeepSeek) | No | No | No |
-| **WAF Bypass** | 9-strategy mutation engine | Basic encoding | No | Tamper scripts |
-| **Blind SQLi** | Adaptive boolean + time-based with SimHash | No | Add-on | Yes (dedicated) |
-| **IDOR/BOLA** | Tri-directional comparison | Via templates | Basic auth testing | No |
-| **Reports** | MD/JSON/CSV/SARIF/JUnit/PDF/Compliance | SARIF, Markdown | HTML, JSON, XML | Dump format |
-| **Compliance** | OWASP Top 10 + PCI-DSS + SOC2 + HIPAA | No | Add-on | No |
-| **CI/CD** | Native exit codes + GitHub Action + Docker | Native + GitHub Action | Docker + CLI | CLI |
-| **Offline** | Full functionality (local AI mode) | Yes (templates) | Partial | Yes |
-| **Language** | Python (async) | Go | Java | Python |
 
 ## Overview
 
@@ -53,7 +23,6 @@ OpenScanner is a modular security assessment platform engineered from the ground
 - **Exhaustive Consensus Detection Model** -- Full-spectrum payload testing with consolidated evidence matrix and AI-driven corroboration, eliminating missed attack vectors
 - **High-Performance Concurrent Scanning** -- Parallel payload probing via `asyncio.gather` + `Semaphore`, delivering 5--10x throughput improvement
 - **Six-Stage Pipeline** -- INFO Reconnaissance, DAST Vulnerability Scanning, SAST Code Audit, IAST Correlation, Deep Reasoning, CWE Analysis
-- **21 Plugins (19 Vulnerability Types)** -- SQLi, XSS, DOM XSS, BOLA/IDOR, SSRF, LFI, CMD Injection, SSTI, CSRF, JWT, File Upload, Logic Flaw, API Fuzzing, GraphQL, Auth Bypass, Info Leak, WAF Detection, Malware Audit, AI Code Audit
 
 ---
 
@@ -113,26 +82,9 @@ OpenScanner is a modular security assessment platform engineered from the ground
 - **WAF Evasion Mode** -- Case mutation + encoding bypass
 - **Reflection Point Probing + Real Payload Verification** -- Two-stage precise detection
 
-### Performance Benchmarks
-
-Tested against a local vulnerable application (DVWA-like) with 50 endpoints, 120 parameters:
-
-| Plugin | Payloads | Concurrency | Total Requests | Time | Req/sec |
-|--------|----------|-------------|----------------|------|---------|
-| SQLi (error + boolean + time) | 150+ | Semaphore(5) | 3,200 | 47s | 68 |
-| XSS (reflected + context-aware) | 90+ | Semaphore(4) | 2,800 | 38s | 74 |
-| BOLA/IDOR (tri-directional) | 40 per param | Semaphore(8) | 1,600 | 12s | 133 |
-| SSRF (metadata + internal) | 80+ | Semaphore(6) | 2,100 | 29s | 72 |
-| LFI (traversal + wrappers) | 100+ | Semaphore(6) | 2,400 | 31s | 77 |
-| WAF Detection (6-dimension) | 37 | Semaphore(4) | 222 | 5s | 44 |
-| Full scan (all plugins) | 600+ | Max 10 | 12,000+ | 3m 12s | 63 |
-
-> **Hardware**: Apple M1, 16GB RAM, Python 3.11, single target.
-> Run your own benchmark: `python main.py -t TARGET --crawl-depth 1 --concurrency 20`
-
 ---
 
-## Quick Start
+## v1.5 Release Notes
 
 ### Critical Bug Fixes
 
@@ -209,7 +161,7 @@ Sanitization function extensions: Python +10 / PHP +8
 
 - New `tests/test_payload_coverage.py` -- **34 tests**
 - Coverage: Python/PHP malicious code detection, XSS DOM dynamic parameter extraction, SecurityVisitor, payload non-empty validation
-- Total test count: **271** (across 20 test files)
+- Total test count: **131 -> 187** (across 18 test files)
 
 ---
 
@@ -290,7 +242,7 @@ tests/
 | **REST API** | FastAPI endpoints: POST /scan, GET /history, GET /diff and other CI/CD integration endpoints |
 | **PDF Reports** | One-click compliant PDF report generation (requires `pip install reportlab`) |
 | **CI/CD-Ready Exit Codes** | `--fail-on high` controls exit code; direct GitHub Actions / GitLab CI integration |
-| **Scan Intensity Levels** | Light / Medium / Full -- CLI: `--scan-intensity` / Web UI: sidebar selection |
+| **Scan Intensity Levels** -- Light / Medium / Full -- CLI: `--scan-intensity` / Web UI: sidebar selection |
 | **Path ID Auto-Synthesis** | Numeric/mixed IDs in URL paths automatically synthesized as `?id=` injection test URLs |
 | **Date Segment Smart Exclusion** | Date segments in paths excluded from injection ID identification |
 
@@ -305,12 +257,6 @@ tests/
 | BOLA ID Probing | `asyncio.gather` + `Semaphore(8)` concurrency | 5--8x |
 | Engine Timeout | 300s -> 1800s | Eliminating truncation |
 | Engine Fault Tolerance | `return_exceptions=True` | Zero cascade failure |
-
-### Feature Enhancements
-
-- **Configuration Persistence** -- AI settings (cloud address/API key/local model path) auto-saved to `.ai_settings.json`
-- **Exhaustive Consensus Model** -- All plugins exhaustively test then output unified Evidence Matrix for AI reasoning
-- **WAF Integration Enhancement** -- WAF mode auto-reduces concurrency and adds randomized delay
 
 ---
 
@@ -375,9 +321,6 @@ OpenScanner/
 |   |   +-- jwt_scan.py         # JWT security scanning
 |   |   +-- ssti_scan.py        # Server-Side Template Injection detection
 |   |   +-- upload_scan.py      # File upload vulnerability detection
-|   |   +-- auth_bypass.py      # Auth bypass (JWT weak sig / token expiry / role escalation)
-|   |   +-- api_fuzz.py         # API fuzzing
-|   |   +-- graphql_scan.py     # GraphQL security (introspection / depth DoS / batch abuse)
 |   +-- demo/
 |   |   +-- vuln_app.py         # Vulnerable demo app for testing
 |   +-- audit/
@@ -417,63 +360,45 @@ OpenScanner/
 |   +-- scan_queue.py           # Scan queue management
 |   +-- security_grade.py       # Security grading
 |   +-- vuln_kb.py              # Vulnerability knowledge base
-|   +-- git_blame.py             # Git blame analyzer (fix attribution)
-|   +-- ci_commenter.py          # CI/CD PR/MR security commenter
-|   +-- fix_pr_generator.py      # Auto-fix PR generation
-+-- tests/                      # 271 tests (20 files)
-    +-- test_utils_modules.py    # 45 tests (utility modules)
++-- tests/                      # 187 tests
     +-- test_core_upgrades.py   # 56 tests (core upgrades)
-    +-- test_ai_modules.py      # 39 tests (AI modules)
     +-- test_new_features.py    # 29 tests (new features)
     +-- test_payload_coverage.py # 34 tests (payload coverage)
     +-- test_sqli_plugin.py     # 14 tests (SQLi plugin)
     +-- test_security_grade.py  # 10 tests (security grading)
-    +-- test_ai_api_integration.py # 5 tests (AI API integration)
     +-- test_demo_app.py        # 7 tests (demo app)
-    +-- test_github_action.py   # 5 tests (GitHub Action)
+    +-- test_ai_api_integration.py # 5 tests (AI API integration)
     +-- test_plugin_system.py   # 5 tests (plugin system)
-    +-- test_scan_policy.py     # 3 tests (scan policy)
-    +-- test_phase1_mvp.py      # 3 tests (phase 1 MVP)
-    +-- test_plugin_additional_logic.py # 4 tests (plugin logic)
-    +-- test_plugin_detection_logic.py # 3 tests (plugin detection)
-    +-- test_consensus_flow.py  # 1 test (consensus flow)
-    +-- test_reporter.py        # 2 tests (reporter)
-    +-- test_plugin_contracts.py # 2 tests (plugin contracts)
-    +-- test_plugin_more_logic.py # 2 tests (more plugin logic)
-    +-- test_plugin_validation_rules.py # 2 tests (plugin validation)
+    +-- test_github_action.py   # 5 tests (GitHub Action)
+    +-- ... (additional integration tests)
 ```
 
 ---
 
 ## Quick Start
 
-### 1. Docker (fastest way to try)
+### 1. Docker Deployment (Recommended)
 
 ```bash
-# Full stack: Web GUI + REST API
+# Launch Web GUI + REST API
 docker-compose up -d
 
-# Or run a single scan
-docker run --rm openscanner/openscanner -t "http://target.com/page?id=1"
+# Web GUI only
+docker-compose up openscanner-web
+
+# Enable scheduled scan scheduler
+docker-compose --profile scheduler up -d
 ```
 
 Web GUI: `http://localhost:8501` | REST API: `http://localhost:8000`
 
-### 2. pip install
-
-```bash
-pip install openscanner
-openscanner --demo                  # zero-config demo with built-in vuln app
-openscanner -t "http://target.com"  # scan a target
-```
-
-### 3. From source
+### 2. Local Deployment
 
 ```bash
 python setup.py
 ```
 
-### 3. Web GUI (Recommended)
+### 3. Web GUI
 
 ```bash
 # Streamlit graphical console (AI configuration panel, per-payload progress, real-time reasoning)
@@ -519,7 +444,7 @@ python main.py -t "/path/to/source" --plugins malware_scan --ai-mode local --ai-
 
 ## AI Model Configuration
 
-### Method 1: Web GUI Configuration (Recommended)
+### Method 1: Web GUI (Recommended)
 
 1. Launch Streamlit: `streamlit run web/app.py`
 2. Locate the **AI Engine Configuration** panel in the sidebar
@@ -527,7 +452,7 @@ python main.py -t "/path/to/source" --plugins malware_scan --ai-mode local --ai-
 4. Enter corresponding configuration items, then save
 5. **Configuration auto-persists to `.ai_settings.json`**, effective on subsequent launches without re-entry
 
-### Method 2: Direct Configuration File Editing
+### Method 2: Configuration File
 
 Edit `.ai_settings.json` in the project root:
 
@@ -538,7 +463,7 @@ Edit `.ai_settings.json` in the project root:
   "ai_api_key": "YOUR_API_KEY",
   "ai_api_base": "https://api.deepseek.com",
   "ai_api_model": "deepseek-chat",
-  "ai_language": "zh",
+  "ai_language": "en",
   "ai_trust_env": true,
   "ai_proxy": ""
 }
@@ -556,7 +481,7 @@ python main.py -t "http://target.com" --ai-mode api --ai-key "sk-xxx" --ai-api-m
 
 ### Cloud Model Configuration
 
-#### DeepSeek (Recommended, Chinese-Optimized)
+#### DeepSeek (Recommended)
 
 | Parameter | Value |
 |-----------|-------|
@@ -582,18 +507,16 @@ python main.py -t "http://target.com" --ai-mode api --ai-key "sk-xxx" --ai-api-m
 
 #### Compatible Endpoints
 
-Any service compatible with the OpenAI `/v1/chat/completions` protocol is supported, including:
+Any service compatible with the OpenAI `/v1/chat/completions` protocol is supported:
 
 - Azure OpenAI
 - Qwen-Plus / Tongyi Qianwen
 - Yi (01.AI)
 - Moonshot
 
-Simply modify `ai_api_base` and `ai_api_model` accordingly.
+Modify `ai_api_base` and `ai_api_model` accordingly.
 
 #### Proxy Configuration (Optional)
-
-If proxy access to cloud APIs is required:
 
 ```json
 {
@@ -617,7 +540,7 @@ pip install llama-cpp-python
 Recommended models (sorted by size/precision):
 
 | Model | Size | Inference Speed | Precision |
-|-------|------|----------------|-----------|
+|-------|------|-----------------|-----------|
 | Qwen2-0.5B-Instruct | ~400MB | Very fast (CPU) | Good |
 | Qwen2-1.5B-Instruct | ~1GB | Fast (CPU) | Good+ |
 | Llama-3.2-1B-Instruct | ~700MB | Fast (CPU) | Good |
@@ -706,12 +629,12 @@ MIT License -- For authorized security assessments only.
 
 ## Documentation
 
-- [Usage Guide (Chinese)](./edu_CN.md) -- WebUI + CLI tutorial
 - [User Guide (English)](./edu_EN.md) -- WebUI + CLI usage guide
+- [Usage Guide (Chinese)](./edu_CN.md) -- WebUI + CLI tutorial
 
 ---
 
 <p align="center">
-  <b>OpenScanner v1.5.0</b> -- DAST x SAST x IAST x Mutation x AI Reasoning x Compliance<br/>
+  <b>OpenScanner v1.5</b> -- DAST x SAST x IAST x Mutation x AI Reasoning x Compliance<br/>
   Built with asyncio + mutation intelligence + hybrid AI reasoning + compliance reporting
 </p>
